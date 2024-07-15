@@ -51,7 +51,7 @@ send_gotify_notification() {
             -H "X-Gotify-Key: $GOTIFY_TOKEN" \
             -H "Content-Type: application/json" \
             --data '{"title":"DNS Update","message":"The A record for '"$domain"' has been updated to '"$ip_address"'","priority":5}')
-        
+            echo -e "✅ Notification sent to $GOTIFY_SERVER"
         if [[ $(echo "$gotify_response" | jq -r '.error') != "null" ]]; then
             echo -e "❌ Error sending notification to Gotify: $(echo "$gotify_response" | jq -r '.error')"
         fi
