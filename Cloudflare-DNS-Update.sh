@@ -31,7 +31,7 @@ create_dns() {
     create_response=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records" \
         -H "Authorization: Bearer $CLOUDFLARE_TOKEN" \
         -H "Content-Type: application/json" \
-        --data '{"type":"A","name":"'"$domain"'","content":"'"$ip_address"'","ttl":120,"proxied":'"$proxied"',"comment":"A Record created by Cloudiny'\''s Script :)"}')
+        --data '{"type":"A","name":"'"$domain"'","content":"'"$ip_address"'","ttl":120,"proxied":'"$proxied"',"comment":"Created by Cloudflare-DNS-Update :)"}')
 
     if [[ $(echo "$create_response" | jq -r '.success') == "true" ]]; then
         echo -e "✅ Creating new DNS record for $domain with IP $ip_address."
@@ -147,7 +147,7 @@ while true; do
         if [[ -n "$RECORD_ID" && "$RECORD_ID" != "null" ]]; then
             # Compare the current IP with the obtained IP
             if [[ "$CURRENT_IP" == "$IP_ADDRESS" ]]; then
-                echo -e "✅ The A record for \"$domain\" is already updated."
+                echo -e "✅ The A record for \"$domain\" is up to date."
             else
                 # Update the DNS record if the IP is different
                 update_dns "$ZONE_ID" "$domain" "$RECORD_ID" "$IP_ADDRESS" "$PROXIED"
@@ -162,5 +162,6 @@ while true; do
     done
 
     echo -e "🔄 Checking IP address again in 5 minutes..."
+    echo -e "\033[33m########################################################\033[m"
     sleep 300
 done
