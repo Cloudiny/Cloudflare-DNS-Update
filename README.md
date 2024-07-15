@@ -1,8 +1,6 @@
-# Cloudflare DNS Updater
+# Cloudflare-DNS-Update
 
-
-
-This Docker image is designed to manage DNS
+This Docker image is designed to manage DNS and send Gotify notifications.
 
 
 Overview
